@@ -1,4 +1,13 @@
 services:
+  vector:
+    container_name: vector
+    image: timberio/vector:0.35.0-debian
+    volumes:
+    #  - ./docker/vector/vector.toml:/etc/vector/vector.toml:ro
+    #  - ./docker/vector/sample:/data/sample
+    env_file:
+      - ./docker/vector/.env
+  
   pulsar:
     container_name: pulsar
     image: apachepulsar/pulsar:3.1.2
@@ -6,3 +15,11 @@ services:
     ports:
       - 6650:6650
       - 8080:8080
+  
+  db:
+    container_name: db
+    image: mariadb:10.3
+    ports:
+      - 3306:3306
+    env_file:
+      - ./docker/mariadb/.env
