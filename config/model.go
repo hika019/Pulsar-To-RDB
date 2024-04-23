@@ -1,4 +1,4 @@
-package main
+package config
 
 type Config struct {
 	Input  Input  `json:"input"`
@@ -27,4 +27,8 @@ type Rdb struct {
 	User      string   `json:"user"`
 	Password  string   `json:"password"`
 	Statement []string `json:"statement"`
+}
+
+type Env struct {
+	ConfPath string
 }

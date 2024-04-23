@@ -1,4 +1,4 @@
-package main
+package config
 
 import (
 	"encoding/json"
@@ -6,10 +6,8 @@ import (
 	"os"
 )
 
-const config = "./config.json"
-
-func readConfig() (Config, error) {
-	f, err := os.Open(config)
+func LoadConfig(env Env) (Config, error) {
+	f, err := os.Open(env.ConfPath)
 	if err != nil {
 		return Config{}, err
 	}
