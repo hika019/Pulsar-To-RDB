@@ -1,25 +1,29 @@
 services:
   vector:
     container_name: vector
-    image: timberio/vector:0.35.0-debian
+    image: timberio/vector:0.37.1-debian
     volumes:
-    #  - ./docker/vector/vector.toml:/etc/vector/vector.toml:ro
-    #  - ./docker/vector/sample:/data/sample
+      - ./docker/vector/vector.yaml:/etc/vector/vector.yaml:ro
+      - ./docker/vector/sample:/data/sample
     env_file:
       - ./docker/vector/.env
   
   pulsar:
     container_name: pulsar
-    image: apachepulsar/pulsar:3.1.2
+    image: apachepulsar/pulsar:3.2.2
     command: bin/pulsar standalone
     ports:
       - 6650:6650
       - 8080:8080
+    volumes:
+      - ./docker/pulsar/init.sh:/init.sh
   
   db:
     container_name: db
-    image: mariadb:10.3
+    image: mariadb:11.3
     ports:
       - 3306:3306
-    env_file:
-      - ./docker/mariadb/.env
+    volumes:
+      - ./docker/mariadb/init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      MARIADB_ROOT_PASSWORD: hogehoge123
