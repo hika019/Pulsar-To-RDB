@@ -1,32 +1,32 @@
 package config
 
 type Config struct {
-	Input  Input  `json:"input"`
-	Output Output `json:"output"`
+	Input  Input  `yaml:"input"`
+	Output Output `yaml:"output"`
 }
 
 type Input struct {
-	Host  string `json:"host"`
-	Topic string `json:"topic"`
-	Codec string `json:"codec"`
+	Host  string `yaml:"host"`
+	Topic string `yaml:"topic"`
+	Codec string `yaml:"codec"`
 }
 
 type Output struct {
-	File File `json:"file"`
-	Rdb  Rdb  `json:"RDB"`
+	File File `yaml:"file"`
+	Rdb  Rdb  `yaml:"rdb"`
 }
 
 type File struct {
-	Path     string `json:"path"`
-	Filename string `json:"filename"`
+	Path     string `yaml:"path"`
+	Filename string `yaml:"filename"`
 }
 
 type Rdb struct {
-	Host      string   `json:"host"`
-	Schema    string   `json:"schema"`
-	User      string   `json:"user"`
-	Password  string   `json:"password"`
-	Statement []string `json:"statement"`
+	Host      string   `yaml:"host"`
+	Schema    string   `yaml:"schema"`
+	User      string   `yaml:"user"`
+	Password  string   `yaml:"password"`
+	Statement []string `yaml:"statement"`
 }
 
 type Env struct {
