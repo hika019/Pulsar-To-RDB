@@ -1,11 +1,11 @@
 package config
 
 type Config struct {
-	Input  Input  `yaml:"input"`
+	Input  Pulsar `yaml:"input"`
 	Output Output `yaml:"output"`
 }
 
-type Input struct {
+type Pulsar struct {
 	Host  string `yaml:"host"`
 	Topic string `yaml:"topic"`
 	Codec string `yaml:"codec"`
@@ -22,6 +22,7 @@ type File struct {
 }
 
 type Rdb struct {
+	Driver    string   `yaml:"driver"`
 	Host      string   `yaml:"host"`
 	Schema    string   `yaml:"schema"`
 	User      string   `yaml:"user"`

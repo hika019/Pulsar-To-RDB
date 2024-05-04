@@ -1,6 +1,6 @@
 
 input:
-    host: "127.0.0.1:6500"
+    host: "pulsar://localhost:6500"
     topic: "persistent://private/test-namespaces/users"
     codec: "json"
 
@@ -11,6 +11,7 @@ output:
         path: "/data/sub/"
     
     rdb:
+        driver: "mysql"
         host: "127.0.0.1:3306"
         schema: "test"
         user: "root"
