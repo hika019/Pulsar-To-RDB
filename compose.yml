@@ -5,8 +5,6 @@ services:
     volumes:
       - ./docker/vector/vector.yaml:/etc/vector/vector.yaml:ro
       - ./docker/vector/sample:/data/sample
-    env_file:
-      - ./docker/vector/.env
   
   pulsar:
     container_name: pulsar

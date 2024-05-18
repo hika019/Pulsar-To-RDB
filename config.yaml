@@ -1,6 +1,6 @@
 
 input:
-    host: "pulsar://localhost:6500"
+    host: "pulsar://localhost:6650"
     topic: "persistent://private/test-namespaces/users"
     codec: "json"
 
