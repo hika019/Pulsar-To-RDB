@@ -13,11 +13,11 @@ output:
     rdb:
         driver: "mysql"
         host: "127.0.0.1:3306"
-        schema: "test"
+        schema: "test_database"
         user: "root"
-        password: "password"
+        password: "hogehoge123"
         statement: [
-                "INSERT test-table (first-name, last-name, age, sex, address) VALUE (?, ?, ?, ?, ?)",
-                "first-name", "last-name", "age", "sex, address"
+                "INSERT users (name, age, address) VALUE (?, ?, ?)",
+                "name", "age", "address"
             ]
 

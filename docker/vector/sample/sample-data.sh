@@ -7,7 +7,7 @@ addresses=("Tokyo" "Osaka" "Aich" "Hokkaido" "Fukuoka")
 for name in ${names[@]}; do
     for age in ${ages[@]}; do
         for address in ${addresses[@]}; do
-            echo "{name:"$name", age:"$age", address:"$address"}" >> test.log
+            echo '{"name":"'$name'", "age":'$age', "address":"'$address'"}' >> test.log
         done
     done
 done

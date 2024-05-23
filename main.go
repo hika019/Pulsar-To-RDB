@@ -3,8 +3,10 @@ package main
 import (
 	"context"
 	"database/sql"
+	"encoding/json"
 	"fmt"
 	"log"
+	"reflect"
 	"time"
 
 	"github.com/apache/pulsar-client-go/pulsar"
@@ -38,29 +40,66 @@ func main() {
 		log.Fatal(err)
 	}
 
-	defer consumer.Close()
+	defer func() {
+		if err := consumer.Unsubscribe(); err != nil {
+			log.Fatal(err)
+		}
+		fmt.Println("Unsubscribe")
+		consumer.Close()
+		fmt.Println("Close consumer")
+	}()
 
-	for i := 0; i < 10; i++ {
-		// may block here
+	db, err := NewDbClient(conf.Output.Rdb)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer db.Close()
+
+	for {
 		msg, err := consumer.Receive(context.Background())
 		if err != nil {
 			log.Fatal(err)
 		}
 
-		fmt.Printf("Received message msgId: %#v -- content: '%s'\n",
-			msg.ID(), string(msg.Payload()))
+		payload := make(map[string]string)
+		err = json.Unmarshal(msg.Payload(), &payload)
+		if err != nil {
+			log.Fatalln(err)
+			continue
+		}
+		fmt.Println()
+		fmt.Println(payload["message"])
+		fmt.Println(reflect.TypeOf(payload["message"]))
 
+		var m map[string]any
+		json.Unmarshal([]byte(payload["message"]), &m)
+
+		fmt.Println("aaa")
+		fmt.Println(m)
+
+		ins, err := db.Prepare(conf.Output.Rdb.Statement[0])
+		if err != nil {
+			log.Fatalln(err)
+		}
+
+		values := []any{}
+		for i, s := range conf.Output.Rdb.Statement {
+			if i == 0 {
+				continue
+			}
+			values = append(values, m[s])
+
+		}
+		_, err = ins.Exec(values...)
+
+		if err != nil {
+			log.Fatal(err)
+			consumer.Nack(msg)
+			continue
+		}
 		consumer.Ack(msg)
 	}
-
-	if err := consumer.Unsubscribe(); err != nil {
-		log.Fatal(err)
-	}
-	// _, err = NewDbClient(conf.Output.Rdb)
-	// if err != nil {
-	// 	log.Fatal(err.Error())
-	// }
-
 }
 
 func initConf() (config.Config, error) {
