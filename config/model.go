@@ -17,8 +17,7 @@ type Output struct {
 }
 
 type File struct {
-	Path     string `yaml:"path"`
-	Filename string `yaml:"filename"`
+	Path string `yaml:"path"`
 }
 
 type Rdb struct {
@@ -32,4 +31,5 @@ type Rdb struct {
 
 type Env struct {
 	ConfPath string
+	LogLevel string
 }

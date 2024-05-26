@@ -13,6 +13,7 @@ func LoadEnv() (Env, error) {
 	}
 
 	confPath := os.Getenv("CONFIG_PATH")
-	env := Env{ConfPath: confPath}
+	logLevel := os.Getenv("INFO")
+	env := Env{ConfPath: confPath, LogLevel: logLevel}
 	return env, nil
 }

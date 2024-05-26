@@ -7,7 +7,6 @@ input:
 
 output:
     file:
-        input: "pulsar_input"
         path: "/data/sub/"
     
     rdb:
